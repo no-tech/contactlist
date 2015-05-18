@@ -32,11 +32,9 @@ class ContactDatabase
   end
 
   def find(string)
-    match = nil
-    @data.index do |item|
-      match = item.join(",") if item.include?(string)
+    @data.index do |record|
+      return record.join(",") if record.include?(string)
     end
-    match
   end
 
   def unique_email?(email)

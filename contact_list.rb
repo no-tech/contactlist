@@ -17,10 +17,13 @@ class Application
   def new
     puts "What is the first name?"
     first_name = STDIN.gets.chomp
+
     puts "What is the last name?"
     last_name = STDIN.gets.chomp
+
     puts "What is the email?"
     contact_email = STDIN.gets.chomp
+    
     Contact.create(first_name, last_name, contact_email)
   end
 

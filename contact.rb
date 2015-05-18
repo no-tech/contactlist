@@ -5,7 +5,6 @@ class Contact
   attr_reader :first_name, :last_name, :email, :index
 
   def initialize(index, first_name, last_name, email)
-    # TODO: assign local variables to instance variables
     @first_name = first_name
     @last_name = last_name
     @email = email
@@ -13,16 +12,13 @@ class Contact
   end
  
   def to_s
-    # TODO: return string representation of Contact
-    "#{@first_name} #{@last_name} #{@email}"
+    "#{index},#{@first_name},#{@last_name},#{@email}"
   end
 
-  ## Class Methods
   class << self
     DB = ContactDatabase.new
     DB.read
     def create(first_name, last_name, email)
-      # TODO: Will initialize a contact as well as add it to the list of contacts
       if DB.unique_email?(email)
         DB.write(Contact.new(assign_index, first_name, last_name, email))
       else
