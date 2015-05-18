@@ -1,33 +1,50 @@
+require_relative "contact_database"
+
 class Contact
  
-  attr_accessor :name, :email
+  attr_reader :first_name, :last_name, :email, :index
 
-  def initialize(name, email)
+  def initialize(index, first_name, last_name, email)
     # TODO: assign local variables to instance variables
+    @first_name = first_name
+    @last_name = last_name
+    @email = email
+    @index = index
   end
  
   def to_s
     # TODO: return string representation of Contact
+    "#{@first_name} #{@last_name} #{@email}"
   end
- 
+
   ## Class Methods
   class << self
-    def create(name, email)
+    DB = ContactDatabase.new
+    DB.read
+    def create(first_name, last_name, email)
       # TODO: Will initialize a contact as well as add it to the list of contacts
+      if DB.unique_email?(email)
+        DB.write(Contact.new(assign_index, first_name, last_name, email))
+      else
+        puts "Can't create user, email already exists"
+      end
     end
  
     def find(index)
-      # TODO: Will find and return contact by index
+      puts DB.find(index)
     end
  
     def all
-      # TODO: Return the list of contacts, as is
+      DB.all
     end
     
     def show(id)
-      # TODO: Show a contact, based on ID
+      puts DB.show(id) ? "#{DB.show(id)}" : "ID not found"
     end
-    
+
+    def assign_index
+        DB.read.last[0].to_i+1
+    end
   end
  
 end
